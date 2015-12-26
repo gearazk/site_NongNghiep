@@ -661,6 +661,7 @@
                     <div class="menuarc">
                         
                         <div id="lmhtx" class="titleMm unnoneTk">Thành viên liên kết cấp quốc <a style="color: #5A5752" href="https://plus.google.com/110823742127041646770?rel=author">g</a>ia liên minh hợp tác xã Việt Nam</div>
+                        
                         <div id="ftk" class="noneTk">
                             <div id="dnn_ArcMenu_SEARCH1_DropDownSearch" class="SearchContainer">
                                 <div class="SearchBorder">
@@ -674,6 +675,7 @@
                                             <li onclick="getView('Rao vặt')">Rao vặt</li>
                                             <li onclick="getView('Gian hàng')">Gian hàng</li>
                                         </ul>
+                                        
                                     </div>
                                     <div class="ccm2">
                                         <input name="dnn$ArcMenu$SEARCH1$txtSearchNew1" maxlength="255" id="txtSearchNew1" class="SearchTextBox csf" placeholder=" Tìm kiếm" onkeydown="return __dnn_KeyDown('13', 'javascript:__doPostBack(%27dnn$ArcMenu$SEARCH1$cmdSearchNew%27,%27%27)', event);" type="text">&nbsp;
@@ -687,6 +689,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="PanenRight">
                             <div id="wrapper">
                                 <ul>
@@ -2803,6 +2806,7 @@
         function GetPopupLogin() {
             $("#popLogin").popupLogin(), $("#LogUserName").focus()
         }
+        
 
         function GetPopupReset() {
             parent.$("#popLogin").popupLogin().close(), $("#popupReset").popupLogin(), $("#UserNameReset").focus(), Gencode2()
@@ -3578,6 +3582,7 @@
         //})
     </script>
     <script type="text/javascript">
+        
         function getView(e) {
             $(".MenuSearch").attr("value", e);
             $(".MenuSearch1").attr("value", e);
@@ -3586,6 +3591,7 @@
             $(".searulvalue").hide();
             $(".searulvalue1").hide()
         }
+        
         $(document).ready(function() {
             $(".searchDownicon").click(function() {
                 $(".searulvalue").slideToggle();
@@ -3604,6 +3610,7 @@
                 $(".searulvalue").hide()
             })
         })
+        
         $(window).scroll(function() {
             200 <= $(window).scrollTop() ? $("#to_top").fadeIn() : $("#to_top").fadeOut()
         });

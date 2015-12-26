@@ -1,4 +1,4 @@
-/*================================================================================
+﻿/*================================================================================
  * @name: popupLogin - if you can't get it up, use popupLogin
  * @author: (c)Bjoern Klinggaard (twitter@bklinggaard)
  * @demo: http://dinbror.dk/popupLogin
