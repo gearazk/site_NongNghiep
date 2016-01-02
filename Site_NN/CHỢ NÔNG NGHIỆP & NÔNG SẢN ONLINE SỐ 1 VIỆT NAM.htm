@@ -692,8 +692,8 @@
                         <div class="PanenRight">
                             <div id="wrapper">
                                 <ul>
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" rel="nofollow" title="Đăng nhập" onclick="GetPopupLogin()">Đăng nhập</a></li>
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" rel="nofollow" title="Đăng ký" onclick="GetPopup()">Đăng ký</a></li>
+                                    <li class=""><span class="cut_menu"></span><a class="cuta" href="login.php" title="Đăng nhập">Đăng nhập</a></li>
+                                    <li class=""><span class="cut_menu"></span><a class="cuta" href="signup.php" title="Đăng ký" >Đăng ký</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -803,8 +803,11 @@
                 </div>
                 <input name="dnn$ArcMenu$PorId" id="PorId" value="0" type="hidden">
                 <input name="dnn$ArcMenu$PorName" id="PorName" value="Nông nghiệp - Nông sản Việt Nam" type="hidden">
+                
                 <div id="popLogin" class="popLogin ">
+
                     <div class="tbLogin">
+
                         <div id="closeLog" class="closex"></div>
                         <div class="lbT">Đăng nhập hệ thống</div>
                         <div class="lbF">Tên tài khoản</div>
@@ -827,9 +830,14 @@
                         <div class="lbC">Quên mật khẩu?
                             <input id="Button1" class="dky2" onclick="GetPopupReset()" value="Lấy lại mật khẩu" type="button">
                         </div>
-                        <input id="cmdLogin" class="dky" value="Đăng nhập" type="button">
+                        
+                        <form action="checkin.php" method="POST"><input class="dky" value="Đăng nhập" type="submit">
+                        </form>
+                        
+                        
                         <input id="cmdNew" class="dky1" onclick="GetPopup()" value="Đăng ký thành viên" type="button">
                     </div>
+                    
                     <!-- Pop-up -->
                     <div style="display: none;" class="dim"></div>
                     <div style="display: none;" class="kbox">
