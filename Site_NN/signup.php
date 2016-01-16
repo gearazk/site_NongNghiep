@@ -39,7 +39,7 @@
                         Họ và tên :
                     </td>
                     <td>
-                        <input type="text" name="txtFullname" size="20" />
+                        <input type="text" class="inputName" name="txtFullname" size="20" />
                     </td>
                 </tr>
                 
@@ -51,6 +51,20 @@
             
         </form>
         
-   
+<script  type="text/javascript">
+            
+   jQuery(document).ready(function($) {
+        var max = 20;
+        $('.inputName').keypress(function(e) {
+
+            if (this.value.length == max) {
+                e.preventDefault();
+            } else if (this.value.length > max) {
+                this.value = this.value.substring(0, max);
+            }
+        });
+    });
+</script>
+
     </body>
 </html>
