@@ -7,7 +7,6 @@
     {
         die('');
     }
-     
     $username   = $_POST['txtUsername'];
     $password   = $_POST['txtPassword'];
     $email      = $_POST['txtEmail'];
