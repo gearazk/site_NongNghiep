@@ -8,7 +8,7 @@
     
     <body>
         <h1>Member Registation </h1>
-        <form action="checkin.php" method="POST" class="signup">
+        <form action="checkin.php" method="POST">
             <table >
                 <tr>
                     <td>
@@ -31,44 +31,38 @@
                         Email :
                     </td>
                     <td>
-                        <input type="text" name="txtEmail" size="20" class="emailInput" />
+                        <input type="text" name="txtEmail" size="20" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Họ và tên :
+                        Họ và tên s:
                     </td>
                     <td>
-                        <input type="text" class="inputName" name="txtFullname" size="20" maxlength="20"/>
+                        <input type="text" class="inputName" name="txtFullname" size="20" />
                     </td>
                 </tr>
                 
             </table>
-            <input type="button" value="Đăng ký" class="btnsubmit"/>
+            
+            <input type="submit" value="Đăng ký" />
             
             <input type="reset" value="Nhập lại" />
             
         </form>
         
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script  type="text/javascript">
-  $(document).ready(function(){
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        var max = 4;
+        $('.inputName').keypress(function(e) {
 
-$('.btnsubmit').click(function(){
-
-    validateForm();   
-});
-
-function validateForm(){
-
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var email = $('.emailInput').val();
-    if(!emailReg.test(email)){
-       alert("email not right !")
-    }else
-        $('.signup').submit();
-   
-}});
+            if (this.value.length == max) {
+                e.preventDefault();
+            } else if (this.value.length > max) {
+                this.value = this.value.substring(0, max);
+            }
+        });
+    });
 </script>
 
     </body>
