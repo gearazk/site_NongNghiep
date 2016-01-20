@@ -746,28 +746,314 @@
                         
     
     <script type="text/javascript">
-    $(function() {
-        $('#popupLoggin').on('click', function() {
-            $.dialog({
-                'DialogTit': 'tit',
-                'DialogCon': '<a href="#">asff</a>',
-                'width': 450,
-                'height': 320,
-                'isLock': true
-            });
-        });
-                    console.log("pop");
+function showpopup()
+{
+$("#loginform").fadeIn();
+$("#loginform").css({"visibility":"visible"});
+$("#bgpopup").fadeIn();
+$("#bgpopup").css({"visibility":"visible"});
+}
+function hidepopup()
+{
+$("#loginform").fadeOut();
+$("#loginform").css({"visibility":"hidden"});
+$("#bgpopup").fadeOut();
+$("#bgpopup").css({"visibility":"hidden"});
+}
+        
+function showpopupLG()
+{
+$("#signupPop").fadeIn();
+$("#signupPop").css({"visibility":"visible"});
+$("#bgpopup").fadeIn();
+$("#bgpopup").css({"visibility":"visible"});
+GencodeSU();
 
-    });
-    </script>  
-                        
+}
+function hidepopupLG()
+{
+$("#signupPop").fadeOut();
+$("#signupPop").css({"visibility":"hidden"});
+$("#bgpopup").fadeOut();
+$("#bgpopup").css({"visibility":"hidden"});
+}
+        
+function CheckformSU()
+{
+
+    if($("#nameLb").val()==""){
+        $("#checkMess").html('Không được để trống tên');
+        return 
+    }
+    if($("#userLb").val()==""){
+        $("#checkMess").html('Không được để trống tên đăng nhập');
+        return 
+    }
+
+    
+    if($("#passLb").val()==""){
+        $("#checkMess").html('Không được để trống mật khẩu');
+        return 
+    }
+    if($("#passLb").val()!=$("#repassLb").val()){
+        $("#checkMess").html('Mật khẩu không trùng nhau');
+        return 
+    }
+    if($("#emailLb").val()==""){
+        $("#checkMess").html('Không được để trống email');
+        return 
+    }
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var emai = $("#emailLb").val();
+    if(!emailReg.test(emai)){
+         $("#checkMess").html('Email không hợp lệ ');
+        return 
+    }
+    
+     if($("#codeLb").val()!=$("#recodeLb").val()){
+        $("#checkMess").html('Sai mã bảo mật ');
+        return 
+    }
+    
+     if(!$("#oktosignup:checked").val()){
+        $("#checkMess").html('Bạn chưa đồng ý với quy định của chúng tôi !');
+        return 
+    }
+    
+    $("#signupForm").submit();
+    console.log($("#signupForm").submit());
+}
+</script>
+        
+     <style>
+#bgpopup{
+    opacity: 0.8;
+    width: 100%;
+    height: 1000%;
+    z-index: 1100;
+    position: absolute;
+    visibility: hidden;
+    background-color:black;
+}
+#loginform
+{
+    margin: 0 0 0 500px;
+    z-index: 1101;
+    position: absolute;
+   width:500px;
+   height:360px;
+   margin-top:100px;
+   background-color:#f2f2f2;
+   box-shadow:0px 0px 10px 0px #424242;
+   font-family:helvetica;
+   visibility:hidden;
+}
+#loginform #close_login
+{
+   position:absolute;
+   top:140px;
+   left:735px;
+   width:15px;
+   height:15px;
+}
+#loginform #tit
+{
+    font-weight:bold;
+   border-left: 2px solid green;
+    padding: 0 0 0 30px;
+   text-align: left;
+   margin: 40px 0 20px 40px ;
+   font-size:13px;
+   color:black;
+    
+}
+#loginform table {
+    margin: 0 0 0 30px;
+    border-spacing: 10px; 
+    text-align: left;
+}
+        
+#loginform #login
+{
+   width:250px;
+   height:20px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#loginform #password
+{
+   margin-top:5px;
+   width:250px;
+   height:20px;
+   border:2px solid silver;
+   border-radius:3px;
+   padding:5px;
+}
+#loginform #dologin
+{
+   margin: 20px 0 10px 0;
+   width:250px;
+   height:35px;
+  border: none;
+    border-radius: 3px;
+   color:#ffffff;
+   background-color:#ff5b33;
+   font-size:13px;
+}
+#loginform .passW
+{
+    display: inline;
+    padding: 0 0px 0 10px ;
+}
+#dosignup{
+    width:250px;
+   height:35px;
+  border: none;
+    border-radius: 3px;
+    background-color:#fff;
+   font-size:13px;
+}
+#signupPop{
+    margin: 0 0 0 500px;
+    z-index: 1101;
+    position: absolute;
+   width:700px;
+   height:540px;
+   margin-top:50px;
+   background-color:#f2f2f2;
+   box-shadow:0px 0px 10px 0px #424242;
+   font-family:helvetica;
+   visibility:hidden;     
+}
+         #signupPop #intro{
+              z-index: 1102;
+             margin: 20px 20px 0 20px;
+             background-color: #ffffb3;
+             padding: 10px 10px 2px 10px;
+         }
+         #signupPop #title{
+             height: 20px;
+              font-weight:bold;
+             border-left: 2px solid green;
+             padding: 0 0 0 30px;
+            margin: 40px 15px 20px 40px ;
+            font-size:12px;
+            color:black;
+         }
+         #signupPop table
+         {
+             margin: 0 0 0 50px;
+    border-spacing: 0px; 
+    text-align: left;
+         }
+         #signupPop table .fiLine{
+color: #686868;
+            font-family: Tahoma;
+    font-size: 10px;
+    font-weight: 700;
+    padding-top: 5px;
+    width: 120px;
+         }
+         #signupPop .chuthich{
+             color: #939d9c;
+    float: left;
+    font-family: Tahoma;
+    font-size: 10px;
+    font-weight: 400;
+    width: 250px;
+         }
+         #signupPop .inp{
+             width: 240px;
+             border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    color: #686868;
+    font-family: Tahoma;
+    font-size: 12px;
+    height: 20px;
+    margin-right: 10px;
+         }
+         #signupPop #codeLb{
+             width: 70px;
+         }
+         #signupPop #recodeLb
+         {
+            visibility: hidden;
+            width: 1px;
+
+            
+         }
+         #signupPop .codeSec{
+             display: inline;
+         }
+         #signupPop #codeGen{
+             background-color: #e4e4e4;
+    border-radius: 2px;
+    color: #020202;
+    font-family: Verdana;
+    font-size: 14px;
+    font-weight: 700;
+    height: 20px;
+    letter-spacing: 3px;
+    margin-right: 5px;
+    opacity: 0.6;
+    padding: 4px 2px 2px;
+    text-align: center;
+    text-shadow: 3px -1px 2px rgba(0, 0, 28, 0.7);
+    width: 80px;
+         }
+         #btnrscode{
+             border: none;
+             background: rgba(0, 0, 0, 0) url("http://thitruongnongnghiep.vn/css/images/refress_comment.jpg") no-repeat scroll 0 0;
+    cursor: pointer;
+    height: 21px;
+    margin-right: 5px;
+    margin-top: 2px;
+    width: 23px;
+
+         }
+         #btnSignup{
+             background-color: #ee4935;
+    border: 0 none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 14px;
+   
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 300px;
+         }
+         #btncloseSU{
+     color: grey;
+         background-color: white;
+         border: 0 none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: Arial;
+    font-size: 14px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    width: 300px;
+         }
+         
+
+                        </style>  
 
                         <div class="PanenRight">
                             <div id="wrapper">
                                 <ul>
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" id="popupLoggin" title="Đăng nhập" rel="nofollow">Đăng nhập</a></li> 
+                                    <li class=""><span class="cut_menu"></span><a class="cuta"  title="Đăng nhập" onclick="showpopup()" rel="nofollow">Đăng nhập</a></li> 
                                     
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" onclick="document.getElementById('light3').style.display='block';document.getElementById('fade').style.display='block'" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
+                                    <li class=""><span class="cut_menu"></span><a class="cuta" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -786,191 +1072,141 @@
                     <div class="clrs"></div>
                 </div>
                 <input name="dnn$ArcMenu$RegCheckOk" id="RegCheckOk" type="hidden">
-                <div id="popupReg" class="popupReg ">
-                    <div class="tbReg">
-                        <div id="closeReg" class="closex"></div>
-                        <div class="waiting none"><img style="top: 50%; left: 50%; position: relative;" alt="waiting" src="CH%E1%BB%A2%20N%C3%94NG%20NGHI%E1%BB%86P%20&amp;%20N%C3%94NG%20S%E1%BA%A2N%20ONLINE%20S%E1%BB%90%201%20VI%E1%BB%86T%20NAM_files/waiting.gif"></div>
-                        <div class="titleDes">
-                            <div class="titleDes1"><b>*Lưu ý:</b> Sau khi thông tin tài khoản được gửi đi, bạn sẽ nhận được một email yêu cầu kích hoạt tài khoản. Tất cả các trường được đánh dấu sao đỏ là bắt buộc. </div>
-                        </div>
-                        <div class="regU">Đăng ký thành viên</div>
-                        <div class="Usreg">
-                            <div class="lbF">Họ và tên<span class="note">(*)</span></div>
-                            <div class="lbR1">
-                                <input name="dnn$ArcMenu$RegDisplayName" id="RegDisplayName" class="txt" style="width:298px;" type="text">
-                                <br>
-                                <div id="lbRegDisplayName" class="not"></div>
-                            </div>
-                            <div class="lbF">Tên đăng nhập<span class="note">(*)</span></div>
-                            <div class="lbR">
-                                <input name="dnn$ArcMenu$RegUserName" id="RegUserName" class="txt" style="width:298px;" type="text">
-                                <br>
-                                <div id="lbRegUserName" class="not"></div>
-                            </div>
-                            <div class="note1">Tên đăng nhập ít nhất có phải 6 ký tự và viết liền không dấu (chỉ bao gồm ký tự và số).</div>
-                            <div class="clr"></div>
-                            <div class="lbF">Mật khẩu<span class="note">(*)</span></div>
-                            <div class="lbR1">
-                                <input name="dnn$ArcMenu$RegPassword" id="RegPassword" class="txt" style="width:298px;" type="password">
-                                <br>
-                                <div id="lbRegPassword" class="not"></div>
-                            </div>
-                            <div class="note1">Mật khẩu có ít nhất 7 ký tự, bao gồm cả ký tự chữ, số, ký tự đặc biệt.</div>
-                            <div class="clr"></div>
-                            <div class="lbF">Nhập lại mật khẩu<span class="note">(*)</span></div>
-                            <div class="lbR1">
-                                <input name="dnn$ArcMenu$RegRepPassword" id="RegRepPassword" class="txt" style="width:298px;" type="password">
-                                <br>
-                                <div id="lbRegRepPassword" class="not"></div>
-                            </div>
-                            <div class="lbF">Email<span class="note">(*)</span></div>
-                            <div class="lbR">
-                                <input name="dnn$ArcMenu$RegEmail" id="RegEmail" class="txt" onkeyup="EmailUs()" style="width:298px;" type="text">
-                                <br>
-                                <div id="lbRegEmail" class="not"></div>
-                            </div>
-                            <div class="lbF">Mã an ninh<span class="note">(*)</span></div>
-                            <div class="lbR">
-                                <input name="RegtxtInput" id="RegtxtInput" size="10" class="Regtcap" type="text">
-                                <div id="RegcharId"></div>
-                                <div class="click" title="Kích vào đây để đổi mã xác nhận" onclick="Gencode1()"></div>
-                                <input id="RegCaptcha" type="hidden"><span class="bgcap" id="RegCaptchaDiv"></span>
-                                <br>
-                                <div id="lbRegtxtInput" class="not"></div>
-                            </div>
-                            <div class="clr"></div>
-                            <div class="lbF">&nbsp;</div>
-                            <div class="lbR isCheck" style="padding-top: 10px;"><span class="aspNetDisabled"><input id="dnn_ArcMenu_isActive" name="dnn$ArcMenu$isActive" checked="checked" disabled="disabled" type="checkbox"></span>
-                                <div class="fab" style="float: right; padding-left: 5px;">Tôi đồng ý các <a class="fa" href="http://thitruongnongnghiep.vn/news/quy-dinh-danh-cho-thanh-vien">quy định</a> và&nbsp;<a class="fa" href="http://thitruongnongnghiep.vn/news/quy-dinh-danh-cho-thanh-vien">điều khoản</a> của Thitruongnongnghiep.vn</div>
-                            </div>
-                            <div class="clr"></div>
-                        </div>
-                        <div class="clr"></div>
-                        <div class="lbF">&nbsp;</div>
-                        <div class="lbR">
-                            <input id="cmdReg" class="dky" value="Đăng ký thành viên" onclick="return CheckRegUs()" type="button">
-                        </div>
-                        <div class="lbF">&nbsp;</div>
-                        <div class="lbR">
-                            <input class="huyb" id="cmdCancel" value="Hủy đăng ký thành viên" type="button">
-                        </div>
-                        <div class="clr"></div>
-                    </div>
-                    <!-- Pop-up -->
-                    <div style="display: none;" class="kdim"></div>
-                    <div class="kbox" style="width: 530px; display: none;">
-                        <div class="box1">Thông báo
-                            <div class="kclose"></div>
-                        </div>
-                        <div style="line-height: 20px; padding: 0 15px 15px; text-align: left;" class="tbg7 box2 none">
-                            <div><span class="left">Chào bạn&nbsp;</span>
-                                <div class="ack1 left" style="font-weight: bold"></div>,</div>
-                            <div><span class="left">Bạn đã đăng ký mở tài khoản&nbsp;</span>
-                                <div class="ack2 left" style="font-weight: bold"></div><span>&nbsp;tại Thitruongnongnghiep.vn thành công!</span></div>
-                            <div><span class="left">Xin vui lòng đăng nhập email&nbsp;</span>
-                                <div class="ack3 left" style="font-weight: bold"></div><span>&nbsp;để kích hoạt tài khoản và đăng nhập sử dụng hệ thống.</span></div>
-                            <div style="padding-top: 10px; padding-left: 60%; clear: both">Trân trọng, </div>
-                            <div style="padding-left: 60%">BQT Thitruongnongnghiep.vn</div>
-                        </div>
-                        <div class="tbg8 box2 none">Hệ thống hiện đang nâng cấp, xin quý khách vui lòng đăng ký lại sau.!</div>
-                    </div>
-                </div>
+                
                 <input name="dnn$ArcMenu$PorId" id="PorId" value="0" type="hidden">
                 <input name="dnn$ArcMenu$PorName" id="PorName" value="Nông nghiệp - Nông sản Việt Nam" type="hidden">
                 
-                <div id="popLogin" class="popLogin ">
-                    <div class="tbLogin">
-                        
-                        <form action="checkin.php" method="POST" id="signin">
-
-                        <div id="closeLog" class="closex"></div>
-                        <div class="lbT">Đăng nhập hệ thống</div>
-                        <div class="lbF">Tên tài khoản</div>
-                        <div class="lbR">
-                            <input name="dnn$ArcMenu$LogUserName" id="LogUserName" class="txt" onkeyup="clickButton(event)" style="width:251px;" type="text"/>
-                            <br>
-                            <div id="lbLogUserName" class="nots"></div>
-                        </div>
-                        <div class="lbF">Mật khẩu</div>
-                        <div class="lbR">
-                            <input name="dnn$ArcMenu$PassWord" id="PassWord" class="txt" onkeyup="clickButton(event)" style="width:251px;" type="password"/>
-                            <br>
-                            <div id="lbPassWord" class="nots"></div>
-                        </div>
-                        <div class="clr"></div>
-                        <div class="lbE">
-                            <input id="SavePass" name="dnn$ArcMenu$SavePass" type="checkbox">
-                            <div class="lbEt">Nhớ mật khẩu</div>
-                        </div>
-                        <div class="lbC">Quên mật khẩu?
-                            <input id="Button1" class="dky2" onclick="GetPopupReset()" value="Lấy lại mật khẩu" type="button">
-                        </div>
-                        </form>
-
-                       <input id="cmdLogin" class="dky" type="button" value="Đăng nhập">
-                        
-                        
-                        <input id="cmdNew" class="dky1" onclick="GetPopup()" value="Đăng ký thành viên" type="button">
-                    </div>
-                    <!-- Pop-up -->
-                    <div style="display: none;" class="dim"></div>
-                    <div style="display: none;" class="kbox">
-                        <div class="box1">Thông báo
-                            <div class="kclose"></div>
-                        </div>
-                        <div class="tbg1 box2 none">Tài khoản này đã bị khóa sau. Hãy đợi 10 phút trước khi đăng nhập lại.</div>
-                        <div class="tbg2 box2 none">Tài khoản không đúng hoặc chưa được kích hoạt, vui lòng kiểm tra lại</div>
-                        <div class="tbg3 box2 none">Hệ thống đang nâng cấp, vui lòng quay lại sau.</div>
-                    </div>
-                </div>
+                
                 <div class="clr"></div>
-                <div id="popupReset" class="popupReset">
-                    <div class="waiting1 none"><img style="top: 40%; left: 46%; position: relative;" title="lấy lại mật khẩu" alt="lấy lại mật khẩu" src="CH%E1%BB%A2%20N%C3%94NG%20NGHI%E1%BB%86P%20&amp;%20N%C3%94NG%20S%E1%BA%A2N%20ONLINE%20S%E1%BB%90%201%20VI%E1%BB%86T%20NAM_files/waiting.gif"></div>
-                    <div class="tbLogin" id="popupLog">
-                        <div id="closeReset" class="closex"></div>
-                        <div class="lbT">Lấy lại mật khẩu</div>
-                        <div class="lbd">Để lấy lại mật khẩu, vui lòng nhập tên tài khoản và email liên hệ vào ô bên dưới.</div>
-                        <div class="lbF">Tên tài khoản</div>
-                        <div class="lbR">
-                            <input name="dnn$ArcMenu$UserNameReset" id="UserNameReset" class="txt" style="width:251px;" type="text">
-                            <br>
-                            <div id="lbUserNameReset" class="nots"></div>
-                        </div>
-                        <div class="lbF">Email liên hệ</div>
-                        <div class="lbR">
-                            <input name="dnn$ArcMenu$EmailReset" id="EmailReset" class="txt" style="width:251px;" type="text">
-                            <br>
-                            <div id="lbEmailReset" class="nots"></div>
-                        </div>
-                        <div class="lbF">Mã xác nhận<span class="note">(*)</span></div>
-                        <div class="lbR">
-                            <input name="txtReset" id="txtReset" size="10" class="tcap" type="text">
-                            <div id="resetID"></div>
-                            <div class="click" title="Kích vào đây để đổi mã xác nhận" onclick="Gencode2()"></div>
-                            <input id="HiddenReset" type="hidden"><span class="bgcap" id="SpanReset"></span>
-                            <br>
-                            <div id="lbtxtReset" class="nots ckns"></div>
-                        </div>
-                        <div class="clr"></div>
-                        <input id="cmdReset" class="dky" value="Lấy lại mật khẩu" type="button">
-                    </div>
-                    <!-- Pop-up -->
-                    <div style="display: none;" class="cdim"></div>
-                    <div style="display: none;" class="kbox">
-                        <div class="box1">Thông báo
-                            <div class="kclose"></div>
-                        </div>
-                        <div class="tbg4 box2 none">Mật khẩu mới đã được gửi đến địa chỉ Email đăng ký của bạn.
-                            <br>Bạn vui lòng check email đã đăng ký để biết thông tin chi tiết.</div>
-                        <div class="tbg5 box2 none">Tên tài khoản đăng nhập, hoặc địa chỉ email của bạn không đúng.
-                            <br>Xin vui lòng kiểm tra lại hoặc liên hệ tới BQT để được trợ giúp.</div>
-                        <div class="tbg6 box2 none">Chức năng lấy lại mật khẩu đã bị vô hiệu hóa.
-                            <br>Hãy liên hệ với BQT để lấy mật mới cho tài khoản của bạn.</div>
-                    </div>
-                </div>
+            
+            <div id="signupPop">
+                <form id="signupForm" method="post" action="checkin.php">
+                    <div id="intro"><p>*<b>Lưu ý:</b> Sau khi thông tin tài khoản được gửi đi, bạn sẽ nhận được một email yêu cầu kích hoạt tài khoản. Tất cả các trường được đánh dấu sao đỏ là bắt buộc. </p></div>
+                    
+                    <div id="title">ĐĂNG KÝ THÀNH VIÊN</div>
+                    
+                    <table>
+                        <tr>
+                            <th>
+                            <p class="fiLine">Họ và tên(*)</p> 
+                            </th>
+                            <th>
+                                <input type = "text" class="inp" id = "nameLb" maxlength="20" name = "nameUID"></th>
+                            
+                            <th></th>
+                        </tr>
+                        <tr id="namelbel"> </tr>
+                <tr>
+                            <th class="fiLine">
+                            <p>Tên đăng nhập(*)</p> 
+                            </th>
+                            <th>
+                                <input type = "text" class="inp" id = "userLb" maxlength="20" name = "usernameUID"></th>
+                    <th class="chuthich">Tên đăng nhập ít nhất có phải 6 ký tự và viết liền không dấu (chỉ bao gồm ký tự và số).</th>
+                            </tr>
+                        <tr id="userlbel"> </tr>
+                    <tr>
+                        <th class="fiLine">
+                            <p>Mật khẩu(*)</p> 
+                        </th>
+                        <th>
+                            <input type = "password" class="inp" id = "passLb" name = "passwordUID">
+                        </th>
+                        <th class="chuthich">Mật khẩu có ít nhất 7 ký tự, bao gồm cả ký tự chữ, số, ký tự đặc biệt.</th>
+                    </tr>
+                        <tr id="passlbel"> </tr>
+                        
+                         <tr>
+                        <th class="fiLine">
+                            <p>Nhập lại mật khẩu(*)</p> 
+                        </th>
+                        <th>
+                            <input type = "password" class="inp" id = "repassLb" >
+                        </th>
+                        <th class="chuthich"></th>
+                    </tr>
+                        <tr id="repasslbel"> </tr>
+                        
+                        <tr>
+                        <th class="fiLine">
+                            <p>Email(*)</p> 
+                        </th>
+                        <th>
+                            <input type = "text" class="inp" id = "emailLb" name = "emailUID">
+                        </th>
+                        <th class="chuthich"></th>
+                    </tr>
+                        <tr id="emaillbel"> </tr>
+                        
+                    
+                    <tr>
+                        <th class="fiLine">
+                            <p>Mã an ninh(*)</p> 
+                        </th>
+                        <th>
+                            <input class="codeSec" type = "text" id = "codeLb" maxlength="4" >
+                                <input class="codeSec" type = "text" id = "recodeLb" style="hidden" ></input>
+                            <div class="codeSec" id="codeGen"></div>
+                            <input id="btnrscode" class="codeSec" onclick="GencodeSU()" type="button"/>
+                        </th>
+                        
+                    </tr>
+                        <tr id="codelbel"> </tr>    
+               
+                    
+                    </table>
+                            </form>    
+
+             <center>
+                    <input type="checkbox" id="oktosignup" name="isOK" style="">Tôi đồng ý các quy định và điều khoản của Thitruongnongnghiep.vn</input>
+                <p id="checkMess" style="color: red; font-size:13px" ></p>
+                    
+            <input id="btnSignup" type="button" onclick="CheckformSU()" value="Đăng ký thành viên"><br>
+            <input id="btncloseSU" type="button" onclick="hidepopupLG()" value="HỦY ĐĂNG KÝ THÀNH VIÊN">
+                </center>
+            </div>
           
             <div class="clr"></div>
             <div class="arcontents">
+        <div id = "loginform">
+            <form id="formlog" method = "post" action = "checkmember.php">
+                <p id="tit">Đăng nhập hệ thống</p>
+
+                <input type = "image" id = "close_login" src = "images/close.png">
+                <table>
+                <tr>
+                    <th>Tên đăng nhập </th>
+                    <th><input type = "text" id = "login" placeholder = "username" name = "usernameUID"></th>
+                </tr>
+                    <tr >
+                        <th></th>
+                        <th id="loginLB"> </th>
+                    </tr>
+                <tr>
+                    <th>Mật khẩu </th>
+                    <th><input type = "password" id = "password" name = "passwordUID" placeholder = "*****"></th>
+                </tr>
+                     <tr >
+                        <th></th>
+                        <th id="passwordLB"> </th>
+                    </tr>
+                    </table>
+                <center>
+                    <input type="checkbox" name="rememPass" class="passW" >Nhớ mật khẩu</input>
+                
+                    <p class="passW">Quên mật khẩu ?</p>
+                    <a href="#" class="passW">Lấy lại mật khẩu</a>
+                
+                    <input type = "button" id = "dologin" value = "ĐĂNG NHẬP">
+                
+                    <input type = "button" id = "dosignup" value = "ĐĂNG KÝ">
+                </center>
+            </form>
+        </div>
+         
+
+                <div id="bgpopup"></div>
+                
                 <div class="PagesColoumn">
                     <div class="arc0">
                         <div class="Msrs">
@@ -2851,13 +3087,15 @@
             return "" == $("#RegtxtInput").val() ? g = "Mã an ninh không được để trống!" : 0 == ValidRegCaptcha() && (g = "Mã an ninh không đúng!"), "" != g ? ($("#lbRegtxtInput").html(g), $("#RegtxtInput").focus(), !1) : 0 == document.getElementById("isActive").checked ? (alert("Bạn chưa đồng ý với các điều khoản mở tài khoản của Thitruongnongnghiep.vn"), !1) : !0
         }
 
-        function Gencode1() {
+        function GencodeSU() {
             var e = Math.ceil(9 * Math.random()),
                 a = Math.ceil(9 * Math.random()),
                 n = Math.ceil(9 * Math.random()),
                 t = Math.ceil(9 * Math.random()),
                 l = e + "" + a + n + t;
-            $("#RegCaptcha").val(l), $("#RegcharId").html(l)
+            $("#recodeLb").val(l); 
+            $("#codeGen").html(l);
+            console.log($("#recodeLb").val());
         }
 
         function ValidRegCaptcha() {
@@ -2919,25 +3157,30 @@
             return parent.$("#popupReset").popupLogin().close(), !1
         });
         
-        $("#cmdLogin").live("click", function() {
+        $("#dologin").live("click", function() {
 
-            if ($("#LogUserName").val() == "") {
-                $("#lbLogUserName").html("Tên gì đăng nhập đăng nhập không được để trống!");
-                $("#LogUserName").focus();
+            if ($("#login").val() == "") {
+                $("#loginLB").html("Tên gì đăng nhập đăng nhập không được để trống!");
+                $("#login").focus();
                 return false
             }
-            if ($("#PassWord").val() == "") {
-                $("#lbPassWord").html("Mật khẩu đăng nhập không được để trống!");
-                $("#PassWord").focus();
+            $("#loginLB").html("");
+
+            if ($("#password").val() == "") {
+                $("#passwordLB").html("Mật khẩu đăng nhập không được để trống!");
+                $("#password").focus();
                 return false
             }
+            $("#passwordLB").html("");
+
             /////////
 
-            $("#signin").submit();
+            $("#formlog").submit();
             console.log("ok ");
 
         });
         /////////
+        
 
         function e(e, t) {
             var n = new Date;
