@@ -2,14 +2,14 @@
     $link = mysql_connect('localhost', 'root', '') or die ('Lỗi kết nối');
     $db=mysql_select_db('user_info',$link) or die("Failed to connect to MySQL: " . mysql_error());
 
-    if (!isset($_POST['nameLb']))
+    if (!isset($_POST['nameUID']))
     {
         die('die');
     }
-    $username   = $_POST['userLb'];
-    $password   = $_POST['passLb'];
-    $email      = $_POST['emailLb'];
-    $name       = $_POST['nameLb'];
+    $username   = $_POST['usernameUID'];
+    $password   = $_POST['passwordUID'];
+    $email      = $_POST['emailUID'];
+    $name       = $_POST['nameUID'];
    
     $password=md5($password);
 
