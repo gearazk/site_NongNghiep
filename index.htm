@@ -777,52 +777,99 @@ $("#signupPop").css({"visibility":"hidden"});
 $("#bgpopup").fadeOut();
 $("#bgpopup").css({"visibility":"hidden"});
 }
-        
+function close_not()
+{
+    $("#bg_not").css({"visibility":"hidden"});
+    $("#box_notice").css({"visibility":"hidden"});
+}
+
 function CheckformSU()
 {
-
-    if($("#nameLb").val()==""){
-        $("#checkMess").html('Không được để trống tên');
+    var regName = /^[a-zA-Z]+/;
+    if($("#nameLb").val()=="" || !regName.test($("#nameLb").val())){
+        $("#namelbel").html('Họ và không hợp lệ (chỉ bao gồm ký tự).');
         return 
     }
-    if($("#userLb").val()==""){
-        $("#checkMess").html('Không được để trống tên đăng nhập');
+    $("#namelbel").html('');
+    
+    if($("#userLb").val().length<7 || !/^[A-Za-z0-9]+$/.test($("#userLb").val()) ){
+        $("#userlbel").html('Tên đăng nhập không hợp lệ (chỉ bao gồm ký tự và số).');
         return 
     }
+    $("#userlbel").html('');
 
     
     if($("#passLb").val()==""){
-        $("#checkMess").html('Không được để trống mật khẩu');
+        $("#passlbel").html('Không được để trống mật khẩu');
         return 
     }
+    $("#passlbel").html('');
+
     if($("#passLb").val()!=$("#repassLb").val()){
-        $("#checkMess").html('Mật khẩu không trùng nhau');
+        $("#repasslbel").html('Mật khẩu không trùng nhau');
         return 
     }
+    $("#repasslbel").html('');
+    
     if($("#emailLb").val()==""){
-        $("#checkMess").html('Không được để trống email');
+        $("#emaillbel").html('Không được để trống email');
         return 
     }
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var emai = $("#emailLb").val();
     if(!emailReg.test(emai)){
-         $("#checkMess").html('Email không hợp lệ ');
+         $("#emaillbel").html('Email không hợp lệ ');
         return 
     }
-    
+    $("#emaillbel").html('');
+
      if($("#codeLb").val()!=$("#recodeLb").val()){
-        $("#checkMess").html('Sai mã bảo mật ');
+        $("#codelbel").html('Sai mã bảo mật ');
         return 
     }
-    
+    $("#codelbel").html('');
+
      if(!$("#oktosignup:checked").val()){
         $("#checkMess").html('Bạn chưa đồng ý với quy định của chúng tôi !');
         return 
     }
-    
-    $("#signupForm").submit();
-    console.log($("#signupForm").submit());
+    $("#checkMess").html('');
+
+     $.ajax({
+        url : "checkin.php",
+        type : "post",
+        dateType:"text",
+        data : {
+        nameUID : $("#nameLb").val(),
+        passwordUID:$("#passLb").val(),
+        emailUID: $("#emailLb").val(),
+        usernameUID: $("#userLb").val(),
+        },
+        success : function (result){
+            if(result=="good")
+            {
+                $("#box_notice").css({"visibility":"visible"}); 
+                $("#bg_not").css({"visibility":"visible"}); 
+                $("#userLB_not").html($("#userLb").val());
+                $("#emailLB_not").html($("#emailLb").val());
+                return
+
+            }
+            if(result=="user")
+            {
+                $("#userlbel").html('Tên đăng nhập này đã có người sử dụng.');
+                return
+            }
+            if(result=="email")
+            {
+                $("#emaillbel").html('Email này đã co người dùng.');
+                return
+            }
+        }
+     });
+    /////abc
 }
+        
 </script>
         
      <style>
@@ -947,6 +994,7 @@ function CheckformSU()
     border-spacing: 0px; 
     text-align: left;
          }
+        
          #signupPop table .fiLine{
 color: #686868;
             font-family: Tahoma;
@@ -1044,8 +1092,59 @@ color: #686868;
     text-decoration: none;
     width: 300px;
          }
-         
-
+         #box_notice {
+             visibility: hidden;
+             background-color: #fff;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    height: 200px;
+    margin: 120px 0 0 80px;
+    position: absolute;
+    width: 530px;
+    z-index: 1109;
+         }
+         #box_notice #title_not{
+             border-bottom: 1px solid #dbdbdb;
+    color: #ff6c00;
+    font-family: arial;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    padding: 10px;
+    text-align: center;
+         }
+        
+        #box_notice #conten_not
+         {
+             font-family: inherit;
+             font-size: 13px;
+             margin: 30px 20px 0 20px;
+             text-align: justify;
+             color: gray;
+         }
+         #box_notice #sign_not{
+             margin:  0 0 0 280px;
+         }
+         #signupPop #bg_not{
+             visibility: hidden;
+             z-index: 1108;
+             position: absolute;
+             background-color: gray;
+             opacity: 0.4;
+             height: 100%;
+             width: 100%;
+         }
+         #title_not #btnclose{
+             cursor: pointer;
+    display: inline;
+    height: 16px;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    width: 16px;
+             background: url(Close16.png) no-repeat;
+             float: right;
+         }
                         </style>  
 
                         <div class="PanenRight">
@@ -1199,6 +1298,21 @@ color: #686868;
                 </div>
                 <div class="clr"></div>
 <div id="signupPop">
+    <div id="box_notice">
+        <div id="title_not">Thông báo <div onclick="close_not()" id="btnclose"></div></div>
+        <div id="conten_not">
+        <p>Chào bạn <span id="userLB_not" style="font-weight: bold"></span>,<br>
+        Bạn đã đăng ký mở tài khoản <span id="userLB_not"  style="font-weight: bold"></span> tại Thitruongnongnghiep.vn thành công!
+Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bold"></span> để kích hoạt tài khoản và đăng nhập sử dụng hệ thống.</p>
+        <div id="sign_not">
+        <p>Trân trọng,<br>
+        BQT Thitruongnongnghiep.vn</p>
+        </div>
+        </div>
+        
+    
+    </div>
+    <span id="bg_not" onclick="close_not()"></span>
                 <form id="signupForm" method="post" action="checkin.php">
                     <div id="intro"><p>*<b>Lưu ý:</b> Sau khi thông tin tài khoản được gửi đi, bạn sẽ nhận được một email yêu cầu kích hoạt tài khoản. Tất cả các trường được đánh dấu sao đỏ là bắt buộc. </p></div>
                     
@@ -1210,11 +1324,13 @@ color: #686868;
                             <p class="fiLine">Họ và tên(*)</p> 
                             </th>
                             <th>
-                                <input type = "text" class="inp" id = "nameLb" maxlength="20" name = "nameUID"></th>
-                            
-                            <th></th>
+                                <input type = "text" class="inp" id = "nameLb" maxlength="20" name = "nameUID"></th>    
+                           
                         </tr>
-                        <tr id="namelbel"> </tr>
+                        <tr >
+                        <th></th>
+                        <th id="namelbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        </tr>
                 <tr>
                             <th class="fiLine">
                             <p>Tên đăng nhập(*)</p> 
@@ -1223,7 +1339,10 @@ color: #686868;
                                 <input type = "text" class="inp" id = "userLb" maxlength="20" name = "usernameUID"></th>
                     <th class="chuthich">Tên đăng nhập ít nhất có phải 6 ký tự và viết liền không dấu (chỉ bao gồm ký tự và số).</th>
                             </tr>
-                        <tr id="userlbel"> </tr>
+                        <tr > 
+                        <th></th>
+                        <th id="userlbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        </tr>
                     <tr>
                         <th class="fiLine">
                             <p>Mật khẩu(*)</p> 
@@ -1233,7 +1352,10 @@ color: #686868;
                         </th>
                         <th class="chuthich">Mật khẩu có ít nhất 7 ký tự, bao gồm cả ký tự chữ, số, ký tự đặc biệt.</th>
                     </tr>
-                        <tr id="passlbel"> </tr>
+                        <tr >
+                        <th></th>
+                        <th id="passlbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        </tr>
                         
                          <tr>
                         <th class="fiLine">
@@ -1244,7 +1366,10 @@ color: #686868;
                         </th>
                         <th class="chuthich"></th>
                     </tr>
-                        <tr id="repasslbel"> </tr>
+                        <tr> 
+                        <th></th>
+                        <th id="repasslbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        </tr>
                         
                         <tr>
                         <th class="fiLine">
@@ -1255,7 +1380,10 @@ color: #686868;
                         </th>
                         <th class="chuthich"></th>
                     </tr>
-                        <tr id="emaillbel"> </tr>
+                        <tr>
+                        <th></th>
+                        <th id="emaillbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        </tr>
                         
                     
                     <tr>
@@ -1270,7 +1398,10 @@ color: #686868;
                         </th>
                         
                     </tr>
-                        <tr id="codelbel"> </tr>    
+                        <tr>
+                        <th></th>
+                        <th id="codelbel" style=" font-size:10px font-family:Tahoma"></th>
+                        </tr>    
                
                     
                     </table>
@@ -1278,11 +1409,15 @@ color: #686868;
 
              <center>
                     <input type="checkbox" id="oktosignup" name="isOK" style="">Tôi đồng ý các quy định và điều khoản của Thitruongnongnghiep.vn</input>
-                <p id="checkMess" style="color: red; font-size:13px" ></p>
+                <p id="checkMess" style="color: red; font-size:10px font-family:Tahoma;" ></p>
                     
             <input id="btnSignup" type="button" onclick="CheckformSU()" value="Đăng ký thành viên"><br>
             <input id="btncloseSU" type="button" onclick="hidepopupLG()" value="HỦY ĐĂNG KÝ THÀNH VIÊN">
                 </center>
+         <!-- start pop notice-->
+    
+
+        <!-- end pop notice-->
             </div>
 
             </div>
@@ -3183,6 +3318,16 @@ color: #686868;
         });
         /////////
         
+        function getOutput() {
+  getRequest(
+      'myAjax.php', // URL for the PHP file
+       drawOutput,  // handle successful request
+       drawError    // handle error
+  );
+  return false;
+}  
+
+        ///////
 
         function e(e, t) {
             var n = new Date;

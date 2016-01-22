@@ -4,7 +4,7 @@
 
     if (!isset($_POST['nameUID']))
     {
-        die('die');
+        die('0');
     }
     $username   = $_POST['usernameUID'];
     $password   = $_POST['passwordUID'];
@@ -13,11 +13,7 @@
    
     $password=md5($password);
 
-    if (!$username || !$password || !$email || !$name )
-    {
-        echo "Are you missing something ?!";
-        exit;
-    }
+   
     
     $di = mysql_query("SELECT username FROM info_table WHERE username='$username'");
     if (!$di) {
@@ -26,29 +22,20 @@
     }
     if (mysql_num_rows($di)>0)
     {
-         echo "This username name was taken !! <a href='javascript: history.go(-1)'>Back</a>";
+        echo "user";
         exit;
     }
     
-    if(!eregi("[_a-z0-9-]+(\.[_a-z0-9-]+)*@[_a-z0-9-]+(\.[_a-z0-9-]+)*(\.[a-z]{2,4})$",$email))
-    {
-        echo "This email is not right !! <a href='javascript: history.go(-1)'>Back</a>";
-        exit;
-    }
-    if (mysql_num_rows(mysql_query("SELECT email FROM info_table WHERE email='$email'")) > 0){
-        echo "This email name was taken !! <a href='javascript: history.go(-1)'>Back</a>";
-        exit;
-    }
    
-    
-
-  
-          
+    if (mysql_num_rows(mysql_query("SELECT email FROM info_table WHERE email='$email'")) > 0){
+        echo "email";
+        exit;
+    }
                           
    $addmember = mysql_query("INSERT INTO `info_table`(`username`, `password`, `fullname`, `email`) VALUES('$username','$password','$name','$email')");
 
     if($addmember)  
-        echo "Register Successed !!";
+        echo "good";
     else
         echo mysql_error();   
    
