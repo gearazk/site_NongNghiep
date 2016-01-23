@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <head id="head">
-    <title>CHỢ NÔNG NGHIỆP &amp; NÔNG SẢN ONLINE SỐ 1 VIỆT NAM</title>
+    <title>Training BmDesign Team 01/2016M</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <meta content="INDEX, FOLLOW" name="robots">
     <meta name="description" content="Sàn giao dịch TMĐT các mặt hàng nông sản và vật tư nông nghiệp. Chợ nông nghiệp online lớn nhất Việt Nam phát triển bởi công ty Agricare VietNam.">
@@ -692,11 +692,32 @@
         opacity: 0.6;
         filter: alpha(opacity=60);
     }
+        
+        #bContainer{
+           height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+        }
+        #bContainer1{
+            position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: -15px;
+    overflow: auto;
+        }
+        html, body {
+    height: 99%;
+    overflow:hidden;
+}
     </style>
     
 </head>
 
 <body id="body">
+<div id="bContainer">
+    <div id="bContainer1">
 
     <form method="post" action="/" id="Form" enctype="multipart/form-data">
                                                                                         
@@ -748,6 +769,9 @@
     <script type="text/javascript">
 function showpopup()
 {
+var username = getCookie("username");
+if(username!="" ) return;
+
 $("#loginform").fadeIn();
 $("#loginform").css({"visibility":"visible"});
 $("#bgpopup").fadeIn();
@@ -763,6 +787,9 @@ $("#bgpopup").css({"visibility":"hidden"});
         
 function showpopupLG()
 {
+var username = getCookie("username");
+if(username!="" ) return;
+
 $("#signupPop").fadeIn();
 $("#signupPop").css({"visibility":"visible"});
 $("#bgpopup").fadeIn();
@@ -788,12 +815,14 @@ function CheckformSU()
     var regName = /^[a-zA-Z]+/;
     if($("#nameLb").val()=="" || !regName.test($("#nameLb").val())){
         $("#namelbel").html('Họ và không hợp lệ (chỉ bao gồm ký tự).');
+        $("#namelbel").focus();
         return 
     }
     $("#namelbel").html('');
     
     if($("#userLb").val().length<7 || !/^[A-Za-z0-9]+$/.test($("#userLb").val()) ){
-        $("#userlbel").html('Tên đăng nhập không hợp lệ (chỉ bao gồm ký tự và số).');
+        $("#userlbel").html('Tên đăng nhập không hợp lệ (chỉ bao gồm ký tự và số > 7 ký tự).');
+        $("#userlbel").focus();
         return 
     }
     $("#userlbel").html('');
@@ -801,30 +830,41 @@ function CheckformSU()
     
     if($("#passLb").val()==""){
         $("#passlbel").html('Không được để trống mật khẩu');
+        $("#passlbel").focus();
+
+        return 
+    }
+    if($("#passLb").val().length<6){
+        $("#passlbel").html('Mật khẩu phải trên 6 ký tự');
+        $("#passlbel").focus();
         return 
     }
     $("#passlbel").html('');
 
     if($("#passLb").val()!=$("#repassLb").val()){
         $("#repasslbel").html('Mật khẩu không trùng nhau');
+        $("#repasslbel").focus();
         return 
     }
     $("#repasslbel").html('');
     
     if($("#emailLb").val()==""){
         $("#emaillbel").html('Không được để trống email');
+        $("#emaillbel").focus();
         return 
     }
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     var emai = $("#emailLb").val();
     if(!emailReg.test(emai)){
          $("#emaillbel").html('Email không hợp lệ ');
+         $("#emaillbel").focus();
         return 
     }
     $("#emaillbel").html('');
 
      if($("#codeLb").val()!=$("#recodeLb").val()){
         $("#codelbel").html('Sai mã bảo mật ');
+        $("#codelbel").focus();
         return 
     }
     $("#codelbel").html('');
@@ -845,31 +885,62 @@ function CheckformSU()
         emailUID: $("#emailLb").val(),
         usernameUID: $("#userLb").val(),
         },
-        success : function (result){
-            if(result=="good")
-            {
-                $("#box_notice").css({"visibility":"visible"}); 
+        success : function (res){
+            if(res["return"]==1)
+            {               
+               $("#box_notice").css({"visibility":"visible"}); 
                 $("#bg_not").css({"visibility":"visible"}); 
                 $("#userLB_not").html($("#userLb").val());
                 $("#emailLB_not").html($("#emailLb").val());
+                
+                setCookie("username",$("#userLb").val(),1);
+                //
+            }
+            if(res["return"]==0)
+            {
+                $("#checkMess").html(res['mgs']);
                 return
 
             }
-            if(result=="user")
-            {
-                $("#userlbel").html('Tên đăng nhập này đã có người sử dụng.');
-                return
-            }
-            if(result=="email")
-            {
-                $("#emaillbel").html('Email này đã co người dùng.');
-                return
-            }
+            
         }
      });
-    /////abc
+    
 }
         
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
+
+        
+window.onload = checkSEC;
+function checkSEC() {
+    
+    var username = getCookie("username");
+    console.log(username);
+    if(username!="" ){
+        $('#SU_link').html( "Xin chào "+username);
+        $('#SU_link').click(function(){
+            return;
+        })
+    }
+}
+
 </script>
         
      <style>
@@ -962,11 +1033,11 @@ function CheckformSU()
    font-size:13px;
 }
 #signupPop{
-    margin: 0 0 0 500px;
+    margin: 0 0 0 25%;
     z-index: 1101;
     position: absolute;
    width:700px;
-   height:540px;
+   height:560px;
    margin-top:50px;
    background-color:#f2f2f2;
    box-shadow:0px 0px 10px 0px #424242;
@@ -1145,6 +1216,18 @@ color: #686868;
              background: url(Close16.png) no-repeat;
              float: right;
          }
+         #btn_closeSU{
+             height: 45px;
+              width: 45px;
+
+         display: inline;
+             float: right;
+            cursor: pointer;
+            background: url(cllogIn.png) no-repeat;
+            position: absolute;
+             right: -20px;
+    top: -20px;
+         }
                         </style>  
 
                         <div class="PanenRight">
@@ -1152,7 +1235,7 @@ color: #686868;
                                 <ul>
                                     <li class=""><span class="cut_menu"></span><a class="cuta"  title="Đăng nhập" onclick="showpopup()" rel="nofollow">Đăng nhập</a></li> 
                                     
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
+                                    <li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1298,6 +1381,8 @@ color: #686868;
                 </div>
                 <div class="clr"></div>
 <div id="signupPop">
+        <span onclick="hidepopupLG()" id="btn_closeSU"></span>
+
     <div id="box_notice">
         <div id="title_not">Thông báo <div onclick="close_not()" id="btnclose"></div></div>
         <div id="conten_not">
@@ -1312,6 +1397,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
         
     
     </div>
+
     <span id="bg_not" onclick="close_not()"></span>
                 <form id="signupForm" method="post" action="checkin.php">
                     <div id="intro"><p>*<b>Lưu ý:</b> Sau khi thông tin tài khoản được gửi đi, bạn sẽ nhận được một email yêu cầu kích hoạt tài khoản. Tất cả các trường được đánh dấu sao đỏ là bắt buộc. </p></div>
@@ -1329,7 +1415,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                         </tr>
                         <tr >
                         <th></th>
-                        <th id="namelbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        <th id="namelbel" style="color: red; font-size:8.5px font-family:Tahoma;"></th>
                         </tr>
                 <tr>
                             <th class="fiLine">
@@ -1341,7 +1427,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                             </tr>
                         <tr > 
                         <th></th>
-                        <th id="userlbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        <th id="userlbel" style="color: red; font-size:8.5px font-family:Tahoma;"></th>
                         </tr>
                     <tr>
                         <th class="fiLine">
@@ -1354,7 +1440,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                     </tr>
                         <tr >
                         <th></th>
-                        <th id="passlbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        <th id="passlbel" style="color: red; font-size:8.5px font-family:Tahoma;"></th>
                         </tr>
                         
                          <tr>
@@ -1368,7 +1454,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                     </tr>
                         <tr> 
                         <th></th>
-                        <th id="repasslbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        <th id="repasslbel" style="color: red; font-size:8.5px font-family:Tahoma;"></th>
                         </tr>
                         
                         <tr>
@@ -1382,7 +1468,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                     </tr>
                         <tr>
                         <th></th>
-                        <th id="emaillbel" style="color: red; font-size:10px font-family:Tahoma;"></th>
+                        <th id="emaillbel" style="color: red; font-size:8.5px font-family:Tahoma;"></th>
                         </tr>
                         
                     
@@ -1400,7 +1486,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
                     </tr>
                         <tr>
                         <th></th>
-                        <th id="codelbel" style=" font-size:10px font-family:Tahoma"></th>
+                        <th id="codelbel" style=" font-size:8.5px font-family:Tahoma"></th>
                         </tr>    
                
                     
@@ -1409,7 +1495,7 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
 
              <center>
                     <input type="checkbox" id="oktosignup" name="isOK" style="">Tôi đồng ý các quy định và điều khoản của Thitruongnongnghiep.vn</input>
-                <p id="checkMess" style="color: red; font-size:10px font-family:Tahoma;" ></p>
+                <p id="checkMess" style="color: red; font-size:8.5px font-family:Tahoma;" ></p>
                     
             <input id="btnSignup" type="button" onclick="CheckformSU()" value="Đăng ký thành viên"><br>
             <input id="btncloseSU" type="button" onclick="hidepopupLG()" value="HỦY ĐĂNG KÝ THÀNH VIÊN">
@@ -4114,6 +4200,8 @@ Xin vui lòng đăng nhập email <span id="emailLB_not"  style="font-weight: bo
         </div>
     </div>
     <iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="CH%E1%BB%A2%20N%C3%94NG%20NGHI%E1%BB%86P%20&amp;%20N%C3%94NG%20S%E1%BA%A2N%20ONLINE%20S%E1%BB%90%201%20VI%E1%BB%86T%20NAM_files/postmessageRelay.htm" id="oauth2relay1186264892" name="oauth2relay1186264892"></iframe>
+</div></div>
+
 </body>
 
 </html>
