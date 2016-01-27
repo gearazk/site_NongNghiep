@@ -787,9 +787,6 @@ $("#bgpopup").css({"visibility":"hidden"});
         
 function showpopupLG()
 {
-var username = getCookie("username");
-if(username!="" ) return;
-
 $("#signupPop").fadeIn();
 $("#signupPop").css({"visibility":"visible"});
 $("#bgpopup").fadeIn();
@@ -841,6 +838,13 @@ function CheckformSU()
     }
     $("#passlbel").html('');
 
+    if($("#passLb").val()== $("#userLb").val()){
+        $("#passlbel").html('Tên đăng nhập và mật khẩu truy cập không được giống nhau.');
+        $("#passlbel").focus();
+        return 
+    }
+    $("#passlbel").html('');
+
     if($("#passLb").val()!=$("#repassLb").val()){
         $("#repasslbel").html('Mật khẩu không trùng nhau');
         $("#repasslbel").focus();
@@ -878,7 +882,7 @@ function CheckformSU()
      $.ajax({
         url : "checkin.php",
         type : "post",
-        dateType:"text",
+        dateType:"json",
         data : {
         nameUID : $("#nameLb").val(),
         passwordUID:$("#passLb").val(),
@@ -886,15 +890,19 @@ function CheckformSU()
         usernameUID: $("#userLb").val(),
         },
         success : function (res){
+            console.log(res);
             if(res["return"]==1)
             {               
                $("#box_notice").css({"visibility":"visible"}); 
                 $("#bg_not").css({"visibility":"visible"}); 
                 $("#userLB_not").html($("#userLb").val());
                 $("#emailLB_not").html($("#emailLb").val());
+                $("#userLb").val('');
+                $("#emailLb").val('');
+                $("#nameLb").val('');
+                $("#codeLb").val('');
                 
-                setCookie("username",$("#userLb").val(),1);
-                //
+                
             }
             if(res["return"]==0)
             {
@@ -928,18 +936,11 @@ function getCookie(cname) {
 
 
         
-window.onload = checkSEC;
-function checkSEC() {
+//window.onload = checkSEC;
+        
+
+       
     
-    var username = getCookie("username");
-    console.log(username);
-    if(username!="" ){
-        $('#SU_link').html( "Xin chào "+username);
-        $('#SU_link').click(function(){
-            return;
-        })
-    }
-}
 
 </script>
         
@@ -1235,7 +1236,12 @@ color: #686868;
                                 <ul>
                                     <li class=""><span class="cut_menu"></span><a class="cuta"  title="Đăng nhập" onclick="showpopup()" rel="nofollow">Đăng nhập</a></li> 
                                     
-                                    <li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
+<?php if(!isset($_SESSION['user']) {?>
+<li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
+<?php } else { ?>
+<li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="" title="Đăng ký" rel="nofollow"><?php echo $_SESSION['user']; ?></a></li>                  
+<?php } ?>
+                                    
                                 </ul>
                             </div>
                         </div>
