@@ -1,19 +1,25 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-
     $link = mysql_connect('localhost', 'root', '') or die ('Lỗi kết nối');
     $db=mysql_select_db('user_info',$link) or die("Failed to connect to MySQL: " . mysql_error());
 
     if (!isset($_POST['nameUID']))
     {
-        if (!isset($_POST['session']))
-            if (isset($_SESSION['user']))
-                return $_SESSION['user'];
+        if (isset($_POST['session'])){
+            if ($_SESSION['user'])
+               echo json_encode( $_SESSION['user']);
             else
-                return 'null';
-        die('0');
+                echo json_encode('null');
+        }else if (isset($_POST['session_out']))
+        {
+            session_destroy();
+            echo json_encode('out');
+        }
+        
+        die;
     }
+    else{
     $username   = $_POST['usernameUID'];
     $password   = $_POST['passwordUID'];
     $email      = $_POST['emailUID'];
@@ -54,4 +60,5 @@ header('Content-Type: application/json');
 
 //$val=$json->encode($val);
     echo json_encode($val);
+    }
 ?>

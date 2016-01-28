@@ -789,8 +789,11 @@ $("#bgpopup").css({"visibility":"hidden"});
         
 function showpopupLG()
 {
-if ($loggin)
+if (loggin)
+    {
+        loggout();
     return
+    }
 $("#signupPop").fadeIn();
 $("#signupPop").css({"visibility":"visible"});
 $("#bgpopup").fadeIn();
@@ -886,7 +889,6 @@ function CheckformSU()
      $.ajax({
         url : "checkin.php",
         type : "post",
-        dateType:"json",
         data : {
         nameUID : $("#nameLb").val(),
         passwordUID:$("#passLb").val(),
@@ -913,7 +915,7 @@ function CheckformSU()
             if(res["return"]==0)
             {
                 $("#checkMess").html(res['mgs']);
-                $loggin = true;
+                loggin = true;
                 return
 
             }
@@ -923,23 +925,26 @@ function CheckformSU()
     
 }
         
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-}
+function loggout() {
+     $.ajax({
+        url : "checkin.php",
+        type : "post",
+        cache: false,
+        data : {
+        session_out : true
+        },
+        success : function (res){
+            console.log(res);
+           if(res == 'out')
+            {
+               $('#SU_link').html('Đăng ký');
+               loggin = false;
+            }
+            
+        }
+     });
+};
 
 
         
@@ -947,17 +952,17 @@ window.onload = function(){
      $.ajax({
         url : "checkin.php",
         type : "post",
-        dateType:"text",
+        cache: false,
         data : {
         session : true
         },
         success : function (res){
             console.log(res);
            if(res != 'null')
-               {
-                   $('#SU_link').html('Xin chào '+res);
-                   $loggin = true;
-               }
+            {
+               $('#SU_link').html('Xin chào '+res);
+               loggin = true;
+            }
             
         }
      });
