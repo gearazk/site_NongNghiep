@@ -767,10 +767,12 @@
                         
     
     <script type="text/javascript">
+        var loggin = false;
+
 function showpopup()
 {
-var username = getCookie("username");
-if(username!="" ) return;
+    
+if(username!="" ) return
 
 $("#loginform").fadeIn();
 $("#loginform").css({"visibility":"visible"});
@@ -787,6 +789,8 @@ $("#bgpopup").css({"visibility":"hidden"});
         
 function showpopupLG()
 {
+if ($loggin)
+    return
 $("#signupPop").fadeIn();
 $("#signupPop").css({"visibility":"visible"});
 $("#bgpopup").fadeIn();
@@ -897,6 +901,8 @@ function CheckformSU()
                 $("#bg_not").css({"visibility":"visible"}); 
                 $("#userLB_not").html($("#userLb").val());
                 $("#emailLB_not").html($("#emailLb").val());
+                $("#passLb").val('');
+                $("#repassLb").val('');
                 $("#userLb").val('');
                 $("#emailLb").val('');
                 $("#nameLb").val('');
@@ -907,6 +913,7 @@ function CheckformSU()
             if(res["return"]==0)
             {
                 $("#checkMess").html(res['mgs']);
+                $loggin = true;
                 return
 
             }
@@ -936,7 +943,25 @@ function getCookie(cname) {
 
 
         
-//window.onload = checkSEC;
+window.onload = function(){
+     $.ajax({
+        url : "checkin.php",
+        type : "post",
+        dateType:"text",
+        data : {
+        session : true
+        },
+        success : function (res){
+            console.log(res);
+           if(res != 'null')
+               {
+                   $('#SU_link').html('Xin chào '+res);
+                   $loggin = true;
+               }
+            
+        }
+     });
+};
         
 
        
@@ -1236,11 +1261,7 @@ color: #686868;
                                 <ul>
                                     <li class=""><span class="cut_menu"></span><a class="cuta"  title="Đăng nhập" onclick="showpopup()" rel="nofollow">Đăng nhập</a></li> 
                                     
-<?php if(!isset($_SESSION['user']) {?>
 <li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="showpopupLG()" title="Đăng ký" rel="nofollow">Đăng ký</a></li>
-<?php } else { ?>
-<li class=""><span class="cut_menu"></span><a class="cuta" id="SU_link" onclick="" title="Đăng ký" rel="nofollow"><?php echo $_SESSION['user']; ?></a></li>                  
-<?php } ?>
                                     
                                 </ul>
                             </div>
