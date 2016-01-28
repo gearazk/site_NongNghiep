@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
     $link = mysql_connect('localhost', 'root', '') or die ('Lỗi kết nối');
@@ -6,6 +7,11 @@ header('Content-Type: application/json');
 
     if (!isset($_POST['nameUID']))
     {
+        if (!isset($_POST['session']))
+            if (isset($_SESSION['user']))
+                return $_SESSION['user'];
+            else
+                return 'null';
         die('0');
     }
     $username   = $_POST['usernameUID'];
@@ -38,7 +44,11 @@ header('Content-Type: application/json');
    $addmember = mysql_query("INSERT INTO `info_table`(`username`, `password`, `fullname`, `email`) VALUES('$username','$password','$name','$email')");
 
     if($addmember)  
-        $val = array('return' => 1, 'msg' => 'OK');
+    {    $val = array('return' => 1, 'msg' => 'OK');
+     $_SESSION['user'] = $username;
+     $_SESSION['pass'] = $password;
+
+    }
     else
         $val = array('return' => 0, 'msg' => 'Có lỗi với sever Xin quay lại sau.');
 
